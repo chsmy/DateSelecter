@@ -10,13 +10,5 @@
        android:layout_height="wrap_content"
        android:layout_marginTop="10dp"
        android:layout_centerHorizontal="true"
-       android:text="样式1"/>
-   <Button
-       android:id="@+id/button1"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:layout_marginTop="10dp"
-       android:layout_below="@id/button"
-       android:layout_centerHorizontal="true"
-       android:text="样式2"/>
+       android:text="打开窗口"/>
 </RelativeLayout>

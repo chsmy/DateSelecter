@@ -1,6 +1,7 @@
 package dateselecter.chs.com.dateselecter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -50,6 +51,13 @@ public class MainActivity extends AppCompatActivity {
                 makeWindowDark();
             }
         });
+        findViewById(R.id.button1).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,SecondActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void showPop() {
@@ -80,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
         wl_start_month = (WheelView) view.findViewById(R.id.wl_start_month);
         wl_start_day = (WheelView) view.findViewById(R.id.wl_start_day);
 
-        NumericWheelAdapter numericWheelAdapterStart1=new NumericWheelAdapter(this,1950, 2100);
+        NumericWheelAdapter numericWheelAdapterStart1=new NumericWheelAdapter(this,2000, 2100);
         numericWheelAdapterStart1.setLabel(" ");
         wl_start_year.setViewAdapter(numericWheelAdapterStart1);
         numericWheelAdapterStart1.setTextColor(R.color.black);
@@ -108,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
         wl_end_month = (WheelView) view.findViewById(R.id.wl_end_month);
         wl_end_day = (WheelView) view.findViewById(R.id.wl_end_day);
 
-        NumericWheelAdapter numericWheelAdapterEnd1=new NumericWheelAdapter(this,1950, 2100);
+        NumericWheelAdapter numericWheelAdapterEnd1=new NumericWheelAdapter(this,2000, 2100);
         numericWheelAdapterEnd1.setLabel(" ");
         wl_end_year.setViewAdapter(numericWheelAdapterEnd1);
         numericWheelAdapterEnd1.setTextColor(R.color.black);

@@ -7,4 +7,5 @@
     <color name="white">#ffffff</color>
     <color name="stroke">#cac7c7</color>
     <color name="blue_text">#0c91f7</color>
+    <color name="gray_text">#909497</color>
 </resources>

@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">DateSelecter</string>
     <string name="action_settings">Settings</string>
+    <string name="date_select">选择时间</string>
+    <string name="submit">提交</string>
+    <string name="cancel">取消</string>
+
+    <string name="last_month">上个月</string>
+    <string name="next_month">下个月</string>
 </resources>

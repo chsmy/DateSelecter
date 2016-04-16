@@ -127,6 +127,14 @@ public class GetTimeUtil {
         brith_StrTime = sdf.format(new Date(time));
         return brith_StrTime;
 	}
+	//获取 年月
+	public static String getYMTime(long time) {
+		String brith_StrTime = null;
+		SimpleDateFormat sdf = null;
+		sdf = new SimpleDateFormat("yyyy-MM");
+		brith_StrTime = sdf.format(new Date(time));
+		return brith_StrTime;
+	}
 	//获取 年月日
 	public static String getYMDTimezh(long time) {
         String brith_StrTime = null;
@@ -264,5 +272,31 @@ public class GetTimeUtil {
 
 		return sdf.format(new Date(Long.valueOf(dateString)*1000));
 	}
+	//获取上个月
+	public static String getLastMonth (String strDate,int last){
+		if (null == strDate) {
+			return null;
+		}
+		try {
 
+			DateFormat fmt = new SimpleDateFormat("yyyy-MM");
+			Calendar c = Calendar.getInstance();
+			if(!"".equals(strDate)){
+				c.setTime(fmt.parse(strDate));
+			}
+			c.add(Calendar.MONTH, last);
+			return fmt.format(c.getTime());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "";
+//		String str = "";
+//		Calendar lastDate = Calendar.getInstance();
+//
+//		lastDate.add(Calendar.MONTH, last);//reduce a month to be last month
+//		SimpleDateFormat sdf = null;
+//		sdf = new SimpleDateFormat("yyyy-MM");
+//		str = sdf.format(lastDate.getTime());
+//		return str;
+	}
 }

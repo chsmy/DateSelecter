@@ -21,28 +21,37 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 /**
  * Numeric Wheel adapter.
  */
 public class NumericWheelAdapter extends AbstractWheelTextAdapter {
-    
-    /** The default min value */
+
+    /**
+     * The default min value
+     */
     public static final int DEFAULT_MAX_VALUE = 9;
 
-    /** The default max value */
+    /**
+     * The default max value
+     */
     private static final int DEFAULT_MIN_VALUE = 0;
-    
+
     // Values
     private int minValue;
     private int maxValue;
-    
+
     // format
     private String format;
-    
+
     private String label;
-    
+    private ArrayList<View> arrayList = new ArrayList<View>();
+    private int position;
+
     /**
      * Constructor
+     *
      * @param context the current context
      */
     public NumericWheelAdapter(Context context) {
@@ -51,7 +60,8 @@ public class NumericWheelAdapter extends AbstractWheelTextAdapter {
 
     /**
      * Constructor
-     * @param context the current context
+     *
+     * @param context  the current context
      * @param minValue the wheel min value
      * @param maxValue the wheel max value
      */
@@ -61,17 +71,27 @@ public class NumericWheelAdapter extends AbstractWheelTextAdapter {
 
     /**
      * Constructor
-     * @param context the current context
+     *
+     * @param context  the current context
      * @param minValue the wheel min value
      * @param maxValue the wheel max value
-     * @param format the format string
+     * @param format   the format string
      */
     public NumericWheelAdapter(Context context, int minValue, int maxValue, String format) {
         super(context);
-        
+
         this.minValue = minValue;
         this.maxValue = maxValue;
         this.format = format;
+    }
+
+    /**
+     * get the list of show textview
+     *
+     * @return the array of textview
+     */
+    public ArrayList<View> getTestViews() {
+        return arrayList;
     }
 
     @Override
@@ -83,11 +103,15 @@ public class NumericWheelAdapter extends AbstractWheelTextAdapter {
         return null;
     }
 
+    public void setPosition(int position) {
+        this.position = position;
+    }
+
     @Override
     public int getItemsCount() {
         return maxValue - minValue + 1;
     }
-    
+
     @Override
     public View getItem(int index, View convertView, ViewGroup parent) {
         if (index >= 0 && index < getItemsCount()) {
@@ -95,24 +119,31 @@ public class NumericWheelAdapter extends AbstractWheelTextAdapter {
                 convertView = getView(itemResourceId, parent);
             }
             TextView textView = getTextView(convertView, itemTextResourceId);
+            if (!arrayList.contains(textView)) {
+                arrayList.add(textView);
+            }
             if (textView != null) {
                 CharSequence text = getItemText(index);
                 if (text == null) {
                     text = "";
                 }
-                textView.setText(text+label);
-    
+                textView.setText(text + label);
+
                 if (itemResourceId == TEXT_VIEW_ITEM_RESOURCE) {
-                    configureTextView(textView);
+                    if (index == position) {
+                        configureCurrentTextView(textView);
+                    } else {
+                        configureTextView(textView);
+                    }
                 }
             }
             return convertView;
         }
-    	return null;
+        return null;
     }
 
-	public void setLabel(String label) {
-		this.label=label;
-	}    
-	
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
 }

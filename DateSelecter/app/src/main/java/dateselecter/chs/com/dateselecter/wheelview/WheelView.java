@@ -56,13 +56,13 @@ public class WheelView extends View {
 			0x00FFFFFF, 0x00FFFFFF  };
 
 	/** Top and bottom items offset (to hide that) */
-	private static final int ITEM_OFFSET_PERCENT = 0;
+	private static final int ITEM_OFFSET_PERCENT = 10;
 
 	/** Left and right padding value */
-	private static final int PADDING = 10;
+	private static final int PADDING = 5;
 
 	/** Default count of visible items */
-	private static final int DEF_VISIBLE_ITEMS = 5;
+	private static final int DEF_VISIBLE_ITEMS = 3;
 
 	// Wheel Values
 	private int currentItem = 0;
@@ -531,7 +531,7 @@ public class WheelView extends View {
 		}
 
 		if (itemsLayout != null && itemsLayout.getChildAt(0) != null) {
-			itemHeight = itemsLayout.getChildAt(0).getHeight();
+			itemHeight = itemsLayout.getChildAt(0).getHeight() ;
 			return itemHeight;
 		}
 
@@ -665,7 +665,7 @@ public class WheelView extends View {
 	 */
 	private void drawCenterRect(Canvas canvas) {
 		int center = getHeight() / 2;
-		int offset = (int) (getItemHeight() / 2 * 1.2);
+		int offset = (int) (getItemHeight() / 2);
 		/*/ Remarked by wulianghuan 2014-11-27  使用自己的画线，而不是描边
 		Rect rect = new Rect(left, top, right, bottom)
 		centerDrawable.setBounds(bounds)
@@ -673,9 +673,9 @@ public class WheelView extends View {
 		centerDrawable.draw(canvas);
 		//*/
 		Paint paint = new Paint();
-		paint.setColor(getResources().getColor(R.color.black));
+		paint.setColor(getResources().getColor(R.color.lable_blue));
 		// 设置线宽
-		paint.setStrokeWidth((float) 3);
+		paint.setStrokeWidth((float) 5);
 		// 绘制上边直线
 		canvas.drawLine(0, center - offset, getWidth(), center - offset, paint);
 		// 绘制下边直线
@@ -780,6 +780,7 @@ public class WheelView extends View {
 
 	/**
 	 * Scroll the wheel
+	 * @param itemsToScroll items to scroll
 	 * @param time scrolling duration
 	 */
 	public void scroll(int itemsToScroll, int time) {

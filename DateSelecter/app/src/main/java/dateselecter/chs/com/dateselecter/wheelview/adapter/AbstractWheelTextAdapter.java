@@ -16,6 +16,7 @@
 package dateselecter.chs.com.dateselecter.wheelview.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -59,7 +60,7 @@ public abstract class AbstractWheelTextAdapter extends AbstractWheelAdapter {
     
     // Empty items resources
     protected int emptyItemResourceId;
-	
+
     /**
      * Constructor
      * @param context the current context
@@ -170,8 +171,8 @@ public abstract class AbstractWheelTextAdapter extends AbstractWheelAdapter {
     public void setEmptyItemResource(int emptyItemResourceId) {
         this.emptyItemResourceId = emptyItemResourceId;
     }
-    
-    
+
+
     /**
      * Returns text for specified item
      * @param index the item index
@@ -227,7 +228,16 @@ public abstract class AbstractWheelTextAdapter extends AbstractWheelAdapter {
 //        view.setCompoundDrawablePadding(20);
 //        view.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
     }
-    
+    protected void configureCurrentTextView(TextView view) {
+        view.setTextColor(Color.BLACK);
+        view.setGravity(Gravity.CENTER);
+        view.setTextSize(20);
+        view.setEllipsize(TextUtils.TruncateAt.END);
+        view.setLines(1);
+//        view.setCompoundDrawablePadding(20);
+//        view.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
+    }
+
     /**
      * Loads a text view from view
      * @param view the text view or layout containing it
@@ -261,7 +271,9 @@ public abstract class AbstractWheelTextAdapter extends AbstractWheelAdapter {
         case NO_RESOURCE:
             return null;
         case TEXT_VIEW_ITEM_RESOURCE:
-            return new TextView(context);
+            TextView textView = new TextView(context);
+            textView.setPadding(0,20,0,20);
+            return textView;
         default:
             return inflater.inflate(resource, parent, false);    
         }

@@ -7,3 +7,5 @@
 
 ![img](https://github.com/chsmy/DateSelecter/blob/master/DateSelecter/117.gif)
 ![](https://github.com/caoweiaaa/DateSelecter/blob/master/DateSelecter/118.gif)
+![](https://github.com/caoweiaaa/DateSelecter/blob/master/DateSelecter/168.gif)
+![](https://github.com/caoweiaaa/DateSelecter/blob/master/DateSelecter/date.gif)

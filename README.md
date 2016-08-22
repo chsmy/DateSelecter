@@ -8,4 +8,5 @@
 ![img](https://github.com/chsmy/DateSelecter/blob/master/DateSelecter/117.gif)
 ![](https://github.com/caoweiaaa/DateSelecter/blob/master/DateSelecter/118.gif)
 ![](https://github.com/caoweiaaa/DateSelecter/blob/master/DateSelecter/168.gif)
-![](https://github.com/caoweiaaa/DateSelecter/blob/master/DateSelecter/date.gif)
+<br/>
+第四种方式 支持选中的item字体变大 颜色变黑

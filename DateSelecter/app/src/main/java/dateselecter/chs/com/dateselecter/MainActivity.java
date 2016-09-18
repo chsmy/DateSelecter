@@ -5,15 +5,10 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
@@ -23,6 +18,7 @@ import android.widget.TextView;
 
 import java.util.Calendar;
 
+import dateselecter.chs.com.dateselecter.wheelview.OnWheelChangedListener;
 import dateselecter.chs.com.dateselecter.wheelview.OnWheelScrollListener;
 import dateselecter.chs.com.dateselecter.wheelview.WheelView;
 import dateselecter.chs.com.dateselecter.wheelview.adapter.NumericWheelAdapter;
@@ -39,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
 
     private RelativeLayout rl_main;
     private TextView tv_start_time,tv_end_time;
+    private int curYear;
+    private int curMonth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,8 +92,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void initWheelView(View view) {
         Calendar c = Calendar.getInstance();
-        int curYear = c.get(Calendar.YEAR);
-        int curMonth = c.get(Calendar.MONTH) + 1;//通过Calendar算出的月数要+1
+        curYear = c.get(Calendar.YEAR);
+        curMonth = c.get(Calendar.MONTH) + 1;//通过Calendar算出的月数要+1
         int curDate = c.get(Calendar.DATE);
         /*****************开始时间***********************/
         wl_start_year = (WheelView) view.findViewById(R.id.wl_start_year);
@@ -109,6 +107,13 @@ public class MainActivity extends AppCompatActivity {
         numericWheelAdapterStart1.setTextSize(20);
         wl_start_year.setCyclic(true);//是否可循环滑动
         wl_start_year.addScrollingListener(startScrollListener);
+        wl_start_year.addChangingListener(new OnWheelChangedListener() {
+            @Override
+            public void onChanged(WheelView wheel, int oldValue, int newValue) {
+                curYear = newValue+2000;
+                initStartDayAdapter();
+            }
+        });
 
         NumericWheelAdapter numericWheelAdapterStart2=new NumericWheelAdapter(this,1, 12, "%02d");
         numericWheelAdapterStart2.setLabel(" ");
@@ -117,15 +122,17 @@ public class MainActivity extends AppCompatActivity {
         numericWheelAdapterStart2.setTextSize(20);
         wl_start_month.setCyclic(true);
         wl_start_month.addScrollingListener(startScrollListener);
+        wl_start_month.addChangingListener(new OnWheelChangedListener() {
+            @Override
+            public void onChanged(WheelView wheel, int oldValue, int newValue) {
+                curMonth = newValue+1;
+                initStartDayAdapter();
+            }
+        });
+        initStartDayAdapter();
 
-        NumericWheelAdapter numericWheelAdapterStart3=new NumericWheelAdapter(this,1,getDay(curYear,curMonth), "%02d");
-        numericWheelAdapterStart3.setLabel(" ");
-        wl_start_day.setViewAdapter(numericWheelAdapterStart3);
-        numericWheelAdapterStart3.setTextColor(R.color.black);
-        numericWheelAdapterStart3.setTextSize(20);
-        wl_start_day.setCyclic(true);
-        wl_start_day.addScrollingListener(startScrollListener);
         /********************结束时间*********************/
+
         wl_end_year = (WheelView) view.findViewById(R.id.wl_end_year);
         wl_end_month = (WheelView) view.findViewById(R.id.wl_end_month);
         wl_end_day = (WheelView) view.findViewById(R.id.wl_end_day);
@@ -137,6 +144,13 @@ public class MainActivity extends AppCompatActivity {
         numericWheelAdapterEnd1.setTextSize(20);
         wl_end_year.setCyclic(true);//是否可循环滑动
         wl_end_year.addScrollingListener(endScrollListener);
+        wl_end_year.addChangingListener(new OnWheelChangedListener() {
+            @Override
+            public void onChanged(WheelView wheel, int oldValue, int newValue) {
+                curYear = newValue+2000;
+                initEndDayAdapter();
+            }
+        });
 
         NumericWheelAdapter numericWheelAdapterEnd2=new NumericWheelAdapter(this,1, 12, "%02d");
         numericWheelAdapterEnd2.setLabel(" ");
@@ -145,7 +159,34 @@ public class MainActivity extends AppCompatActivity {
         numericWheelAdapterEnd2.setTextSize(20);
         wl_end_month.setCyclic(true);
         wl_end_month.addScrollingListener(endScrollListener);
+        wl_end_month.addChangingListener(new OnWheelChangedListener() {
+            @Override
+            public void onChanged(WheelView wheel, int oldValue, int newValue) {
+                curMonth = newValue+1;
+                initEndDayAdapter();
+            }
+        });
 
+        initEndDayAdapter();
+
+        wl_start_year.setCurrentItem(curYear - 2000);
+        wl_start_month.setCurrentItem(curMonth-1);
+        wl_start_day.setCurrentItem(curDate-1);
+
+        wl_end_year.setCurrentItem(curYear - 2000);
+        wl_end_month.setCurrentItem(curMonth - 1);
+        wl_end_day.setCurrentItem(curDate-1);
+    }
+    private void initStartDayAdapter(){
+        NumericWheelAdapter numericWheelAdapterStart3=new NumericWheelAdapter(MainActivity.this,1,getDay(curYear,curMonth), "%02d");
+        numericWheelAdapterStart3.setLabel(" ");
+        wl_start_day.setViewAdapter(numericWheelAdapterStart3);
+        numericWheelAdapterStart3.setTextColor(R.color.black);
+        numericWheelAdapterStart3.setTextSize(20);
+        wl_start_day.setCyclic(true);
+        wl_start_day.addScrollingListener(startScrollListener);
+    }
+    private void initEndDayAdapter(){
         NumericWheelAdapter numericWheelAdapterEnd3=new NumericWheelAdapter(this,1,getDay(curYear,curMonth), "%02d");
         numericWheelAdapterEnd3.setLabel(" ");
         wl_end_day.setViewAdapter(numericWheelAdapterEnd3);
@@ -153,14 +194,6 @@ public class MainActivity extends AppCompatActivity {
         numericWheelAdapterEnd3.setTextSize(20);
         wl_end_day.setCyclic(true);
         wl_end_day.addScrollingListener(endScrollListener);
-
-        wl_start_year.setCurrentItem(curYear - 1950);
-        wl_start_month.setCurrentItem(curMonth-1);
-        wl_start_day.setCurrentItem(curDate-1);
-
-        wl_end_year.setCurrentItem(curYear - 1950);
-        wl_end_month.setCurrentItem(curMonth - 1);
-        wl_end_day.setCurrentItem(curDate-1);
     }
     OnWheelScrollListener startScrollListener = new OnWheelScrollListener() {
         @Override
@@ -168,7 +201,7 @@ public class MainActivity extends AppCompatActivity {
         }
         @Override
         public void onScrollingFinished(WheelView wheel) {
-            int n_year = wl_start_year.getCurrentItem() + 1950;//年
+            int n_year = wl_start_year.getCurrentItem() + 2000;//年
             int n_month = wl_start_month.getCurrentItem() + 1;//月
             int n_day = wl_start_day.getCurrentItem() + 1;//日
             tv_start_time.setText(n_year+"/"+n_month+"/"+n_day);
@@ -180,7 +213,7 @@ public class MainActivity extends AppCompatActivity {
         }
         @Override
         public void onScrollingFinished(WheelView wheel) {
-            int n_year = wl_end_year.getCurrentItem() + 1950;//年
+            int n_year = wl_end_year.getCurrentItem() + 2000;//年
             int n_month = wl_end_month.getCurrentItem() + 1;//月
             int n_day = wl_end_day.getCurrentItem() + 1;//日
             tv_end_time.setText(n_year+"/"+n_month+"/"+n_day);
@@ -193,7 +226,7 @@ public class MainActivity extends AppCompatActivity {
      * @param month
      * @return
      */
-    public static int getDay(int year, int month) {
+    public int getDay(int year, int month) {
         int day = 30;
         boolean flag = false;
         switch (year % 4) {

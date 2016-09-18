@@ -16,7 +16,6 @@
 package dateselecter.chs.com.dateselecter.wheelview.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -229,7 +228,7 @@ public abstract class AbstractWheelTextAdapter extends AbstractWheelAdapter {
 //        view.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
     }
     protected void configureCurrentTextView(TextView view) {
-        view.setTextColor(Color.BLACK);
+        view.setTextColor(textColor);
         view.setGravity(Gravity.CENTER);
         view.setTextSize(20);
         view.setEllipsize(TextUtils.TruncateAt.END);
